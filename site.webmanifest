@@ -1,0 +1,12 @@
+{
+  "name": "Cosmo Textile",
+  "short_name": "Cosmo Textile",
+  "description": "Home-fashion textile manufacturer and exporter, Karur, India.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f4ef",
+  "theme_color": "#0a2a4a",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

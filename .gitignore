@@ -1,0 +1,12 @@
+# Large source presentation decks — not part of the website
+*.pptx
+
+# Design exploration & internal previews — not part of the shipped site
+/design-canvas/
+/theme-preview.html
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp

@@ -1,0 +1,9 @@
+# Normalise line endings — LF in the repo, deploy targets are Linux
+* text=auto eol=lf
+
+# Treat these as binary (never diff/merge/eol-convert)
+*.png binary
+*.jpg binary
+*.webp binary
+*.svg text
+*.pptx binary
