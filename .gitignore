@@ -3,7 +3,10 @@
 
 # Design exploration & internal previews — not part of the shipped site
 /design-canvas/
-/theme-preview.html
+/tools/theme-preview.html
+
+# Raw source photos / reference assets for tools/optimize-images.py — not part of the shipped site
+/tools/source-images/
 
 # OS / editor cruft
 .DS_Store

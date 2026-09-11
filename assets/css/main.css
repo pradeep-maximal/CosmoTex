@@ -12,10 +12,10 @@
   --navy-deep: #071e37;
   --cyan: #00a0e3;
   --cyan-ink: #0077ab;
-  --ochre: #d69a2e;
-  --ochre-deep: #b87d17;
-  --paper: #f7f4ef;
-  --paper-warm: #f1ebe1;
+  --ochre: #c9a227;
+  --ochre-deep: #a3801c;
+  --paper: #faf8ef;
+  --paper-warm: #f2e9d0;
   --card: #ffffff;
   --ink: #16202b;
   --ink-soft: #45535f;
@@ -159,16 +159,15 @@ body::after {
 }
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
 .site-header--solid {
-  background: rgba(247, 244, 239, .88);
+  background: rgba(250, 248, 239, .9);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 1px 0 var(--line), 0 10px 30px rgba(7, 30, 55, .07);
 }
 .site-header--hidden { transform: translateY(-102%); }
 
-.brand { display: flex; align-items: center; gap: .7rem; flex-shrink: 0; }
-.brand img { height: 34px; width: auto; }
-.brand__logo--white { display: none; }
+.brand { display: flex; align-items: center; flex-shrink: 0; color: var(--navy); }
+.brand__mark { height: 34px; width: auto; flex-shrink: 0; }
 
 .nav { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2.1rem); }
 .nav a {
@@ -228,7 +227,8 @@ body.menu-open .menu-toggle span::after { transform: rotate(-45deg) translateY(-
 @media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr; } }
 .site-footer h4 { color: #fff; font-family: var(--font-body); font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 1.1rem; font-weight: 600; }
 .site-footer ul li + li { margin-top: .6rem; }
-.site-footer .brand img { height: 40px; filter: none; }
+.site-footer .brand { color: #fff; }
+.site-footer .brand__mark { height: 46px; }
 .footer-bottom { margin-top: 3.5rem; padding-top: 1.6rem; border-top: 1px solid rgba(255, 255, 255, .12); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: .85rem; color: #8ba0b1; }
 
 .footer-marquee { border-top: 1px solid rgba(255,255,255,.1); border-bottom: 1px solid rgba(255,255,255,.1); overflow: hidden; padding-block: 1.1rem; margin-bottom: 3rem; }
