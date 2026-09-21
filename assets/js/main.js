@@ -169,8 +169,54 @@
   }
 
   /* ---------- marquee: duplicate content for seamless loop ---------- */
-  document.querySelectorAll(".marquee__row, .logos").forEach(function (row) {
+  document.querySelectorAll(".marquee__row").forEach(function (row) {
     row.innerHTML += row.innerHTML;
+  });
+
+  /* ---------- client logos: one unbroken chain ----------
+     Repeat the set until half the track is at least as wide as the strip, then
+     the CSS -50% shift loops with no gap. Speed is fixed in px/s so it reads
+     the same however many logos there are. */
+  var CHAIN_SPEED = 55;
+  document.querySelectorAll(".logos").forEach(function (track) {
+    if (reduceMotion) return;
+    var frame = track.parentNode;
+    var originals = Array.prototype.slice.call(track.children);
+    var imgs = Array.prototype.slice.call(track.querySelectorAll("img"));
+
+    function build() {
+      Array.prototype.slice.call(track.querySelectorAll("[data-clone]")).forEach(function (el) {
+        track.removeChild(el);
+      });
+      var setW = track.getBoundingClientRect().width;
+      if (!setW) return;
+      var perHalf = Math.max(1, Math.ceil(frame.clientWidth / setW));
+      for (var i = 0; i < perHalf * 2 - 1; i++) {
+        originals.forEach(function (el) {
+          var c = el.cloneNode(true);
+          c.setAttribute("data-clone", "");
+          c.setAttribute("aria-hidden", "true");
+          if (c.tagName === "IMG") c.setAttribute("alt", "");
+          track.appendChild(c);
+        });
+      }
+      track.style.animationDuration = (perHalf * setW / CHAIN_SPEED) + "s";
+    }
+
+    var pending = imgs.filter(function (img) { return !img.complete; }).length;
+    if (!pending) build();
+    else imgs.forEach(function (img) {
+      if (img.complete) return;
+      var done = function () { if (--pending === 0) build(); };
+      img.addEventListener("load", done, { once: true });
+      img.addEventListener("error", done, { once: true });
+    });
+
+    var rt;
+    window.addEventListener("resize", function () {
+      clearTimeout(rt);
+      rt = setTimeout(function () { if (!pending) build(); }, 200);
+    });
   });
 
   /* ---------- hero parallax ---------- */

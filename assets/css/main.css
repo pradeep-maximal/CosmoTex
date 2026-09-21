@@ -382,14 +382,21 @@ body.menu-open .menu-toggle span::after { transform: rotate(-45deg) translateY(-
 .footer-marquee .marquee__row span::after { color: var(--ochre); }
 
 /* client logo strip */
-.logos { display: flex; align-items: center; gap: 1.5rem; width: max-content; animation: marquee 44s linear infinite; }
+/* Spacing is a trailing margin (not flex gap) so every repeated set is exactly
+   the same width and the -50% loop lands seamlessly; main.js repeats the set
+   until one half spans the strip and sets the duration for a steady speed. */
+.logos { display: flex; align-items: center; width: max-content; animation: marquee 44s linear infinite; }
+.marquee:hover .logos { animation-play-state: paused; }
 .logos img {
-  height: 44px; width: auto; box-sizing: content-box;
-  padding: 14px 26px; background: var(--card);
+  height: 44px; width: auto; box-sizing: content-box; flex: none;
+  padding: 14px 26px; margin-right: 1.5rem; background: var(--card);
   border: 1px solid var(--line); border-radius: 14px;
   object-fit: contain;
 }
-@media (prefers-reduced-motion: reduce) { .logos { animation: none; flex-wrap: wrap; justify-content: center; width: auto; } }
+@media (prefers-reduced-motion: reduce) {
+  .logos { animation: none; flex-wrap: wrap; justify-content: center; width: auto; gap: 1.5rem; }
+  .logos img { margin-right: 0; }
+}
 
 /* ---------- forms ---------- */
 .form { display: grid; gap: 1.2rem; }
@@ -442,10 +449,16 @@ body.menu-open .menu-toggle span::after { transform: rotate(-45deg) translateY(-
 /* ---------- world map (markets) ---------- */
 .map-wrap { position: relative; background: var(--navy); border-radius: var(--radius); overflow: hidden; padding: clamp(1.5rem, 4vw, 3rem); }
 .map-wrap svg { width: 100%; height: auto; }
-.map-land { fill: #16436b; }
+/* country outlines: fine lines that stay ~1px however the map scales */
+.map-land path { fill: rgba(255, 255, 255, .05); stroke: rgba(207, 224, 238, .32); stroke-width: 1; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.map-land--target path { fill: rgba(201, 162, 39, .14); stroke: var(--ochre); stroke-width: 1.25; }
+.map-land--live path { fill: rgba(0, 160, 227, .2); stroke: var(--cyan); stroke-width: 1.5; }
+.map-labels { fill: #eaf2f9; font-weight: 600; paint-order: stroke; stroke: var(--navy); stroke-width: 4px; stroke-linejoin: round; }
 .map-dot { fill: var(--cyan); }
 .map-dot--target { fill: var(--ochre); }
 .map-arc { fill: none; stroke: var(--cyan); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.map-arc--target { stroke: var(--ochre); stroke-width: 1.5; stroke-dasharray: 6 6; }
+.map-arc--live { stroke-width: 2.5; }
 .map-legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.4rem; font-size: .85rem; color: #b7c6d4; }
 .map-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: .5rem; }
 
