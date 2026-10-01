@@ -166,7 +166,7 @@ body::after {
 }
 .site-header--hidden { transform: translateY(-102%); }
 
-.brand { display: flex; align-items: center; flex-shrink: 0; color: var(--navy); }
+.brand { display: flex; align-items: center; flex-shrink: 0; color: #073865; }
 .brand__mark { height: 34px; width: auto; flex-shrink: 0; }
 
 .nav { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2.1rem); }
