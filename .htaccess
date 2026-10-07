@@ -1,0 +1,44 @@
+# Apache configuration (GoDaddy cPanel hosting). Mirrors netlify.toml.
+# The git repo is cloned straight into public_html, so keep its internals private.
+
+Options -Indexes
+RedirectMatch 404 /\.(git|github)(/|$)
+<FilesMatch "^\.(gitignore|gitattributes|cpanel\.yml)$">
+  Require all denied
+</FilesMatch>
+
+# Force HTTPS and drop "www."
+RewriteEngine On
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+# Hide source/tooling folders from the public
+RewriteRule ^(_partials|tools|design-canvas)(/|$) - [F,L]
+<FilesMatch "\.(pptx|toml|md|py)$">
+  Require all denied
+</FilesMatch>
+
+ErrorDocument 404 /404.html
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+    Header set X-Content-Type-Options "nosniff"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+  </FilesMatch>
+</IfModule>
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/json
+</IfModule>

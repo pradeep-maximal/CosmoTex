@@ -1,0 +1,27 @@
+# Tells cPanel (Git Version Control) to pull main into public_html on every push.
+# Needs repo secrets: CPANEL_HOST, CPANEL_USER, CPANEL_TOKEN (cPanel → Manage API Tokens).
+# Skipped until CPANEL_TOKEN is set; until then use "Update from Remote" in cPanel.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency: deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CPANEL_HOST: ${{ secrets.CPANEL_HOST }}
+      CPANEL_USER: ${{ secrets.CPANEL_USER }}
+      CPANEL_TOKEN: ${{ secrets.CPANEL_TOKEN }}
+    steps:
+      - name: Pull main on the server
+        if: env.CPANEL_TOKEN != ''
+        run: |
+          res=$(curl -fsS -H "Authorization: cpanel $CPANEL_USER:$CPANEL_TOKEN" \
+            "https://$CPANEL_HOST:2083/execute/VersionControl/update?repository_root=/home/$CPANEL_USER/public_html&branch=main")
+          echo "$res"
+          echo "$res" | grep -q '"status":1'
