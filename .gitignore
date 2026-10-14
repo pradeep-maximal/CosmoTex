@@ -13,3 +13,6 @@
 Thumbs.db
 desktop.ini
 *.swp
+
+# Node (static server used by the GoDaddy host)
+node_modules/
