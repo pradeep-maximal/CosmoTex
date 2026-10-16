@@ -273,7 +273,15 @@ body.menu-open .menu-toggle span::after { transform: rotate(-45deg) translateY(-
 .hero__media [data-parallax] { border-radius: var(--radius); box-shadow: var(--shadow-lg); will-change: transform; }
 .hero__media img { border-radius: var(--radius); width: 100%; object-fit: cover; object-position: center 72%; aspect-ratio: 4 / 5; }
 @media (max-width: 960px) { .hero__media img { aspect-ratio: 16 / 11; } }
-.hero__media::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius); pointer-events: none; background: linear-gradient(180deg, rgba(10, 42, 74, .16), transparent 26%, transparent 62%, rgba(10, 42, 74, .14)); }
+.hero__media picture { display: block; border-radius: var(--radius); overflow: hidden; }
+.hero__media::after { content: ""; position: absolute; inset: 0; border-radius: var(--radius); pointer-events: none; background: linear-gradient(180deg, rgba(10, 42, 74, .16), transparent 26%, transparent 62%, rgba(10, 42, 74, .14)); transition: opacity .9s var(--ease); }
+/* hide the tint overlay until the photo has unrolled (set by main.js) */
+.hero__media.is-revealing::after { opacity: 0; }
+/* pre-paint state, set by an inline script in index.html <head> so the photo never flashes before main.js runs */
+.hero-pending .hero__media picture { clip-path: inset(0% 0% 100% 0% round 22px); }
+.hero-pending .hero__media [data-parallax] { box-shadow: none; }
+.hero-pending .hero__media::after,
+.hero-pending .hero__badge { opacity: 0; }
 .hero__badge {
   position: absolute; left: -6%; bottom: 6%;
   background: var(--card); border-radius: var(--radius-sm);

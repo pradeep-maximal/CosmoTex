@@ -133,9 +133,56 @@
         y: 18, autoAlpha: 0, duration: 0.8, ease: "power3.out", stagger: 0.1, delay: 0.2
       });
     }
-    if (heroMediaEl) {
-      gsap.from(heroMediaEl, { autoAlpha: 0, scale: 0.97, duration: 1, ease: "power3.out", delay: 0.15 });
+    if (heroMediaEl) revealHeroMedia(heroMediaEl);
+  }
+
+  /* hero photo unrolls top-down like a length of cloth, once the image has decoded */
+  function revealHeroMedia(media) {
+    var frame = media.querySelector("[data-parallax]");
+    var pic = media.querySelector("picture");
+    var img = media.querySelector("img");
+    var badge = media.querySelector(".hero__badge");
+    if (!frame || !pic || !img) return;
+
+    var shadow = getComputedStyle(frame).boxShadow;
+    media.classList.add("is-revealing");
+    gsap.set(frame, { boxShadow: "0 0px 0px rgba(7, 30, 55, 0)" });
+    gsap.set(pic, { clipPath: "inset(0% 0% 100% 0% round 22px)" });
+    gsap.set(img, { scale: 1.12, filter: "blur(6px)", transformOrigin: "50% 30%" });
+    if (badge) gsap.set(badge, { autoAlpha: 0, y: 14 });
+    document.documentElement.classList.remove("hero-pending");
+
+    var started = false;
+    function play() {
+      if (started) return;
+      started = true;
+      clearTimeout(failsafe);
+      var tl = gsap.timeline({
+        defaults: { ease: "expo.out" },
+        onComplete: function () {
+          gsap.set(pic, { clearProps: "clipPath" });
+          gsap.set(img, { clearProps: "transform,filter" });
+          gsap.set(frame, { clearProps: "boxShadow" });
+        }
+      });
+      tl.to(pic, { clipPath: "inset(0% 0% 0% 0% round 22px)", duration: 1.25 }, 0)
+        .to(img, { scale: 1, filter: "blur(0px)", duration: 1.6 }, 0)
+        .to(frame, { boxShadow: shadow, duration: 1.2, ease: "power2.out" }, 0.35)
+        .add(function () { media.classList.remove("is-revealing"); }, 0.5);
+      if (badge) tl.to(badge, { autoAlpha: 1, y: 0, duration: 0.9 }, 0.75);
     }
+
+    // never leave the photo hidden: reveal anyway if loading drags on
+    var failsafe = setTimeout(play, 2500);
+    var ready = img.complete && img.naturalWidth
+      ? Promise.resolve()
+      : new Promise(function (res) {
+          img.addEventListener("load", res, { once: true });
+          img.addEventListener("error", res, { once: true });
+        });
+    ready
+      .then(function () { return img.decode ? img.decode().catch(function () {}) : null; })
+      .then(function () { setTimeout(play, 150); });
   }
 
   /* ---------- animated counters ---------- */
