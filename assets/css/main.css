@@ -218,6 +218,11 @@ body.menu-open .menu-toggle span::after { transform: rotate(-45deg) translateY(-
   }
   .nav a { font-size: 1.5rem; font-family: var(--font-display); }
   body.menu-open .nav { transform: translateX(0); }
+  /* logo and the open/close button stay above the full-screen menu */
+  .site-header .brand, .header-cta { position: relative; z-index: 95; }
+  /* an open menu needs the header in place: transform or backdrop-filter would trap the fixed .nav inside the header strip */
+  body.menu-open { overflow: hidden; }
+  body.menu-open .site-header { transform: none; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
   .header-cta .btn--ghost { display: none; }
 }
 

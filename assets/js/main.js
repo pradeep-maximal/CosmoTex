@@ -65,13 +65,14 @@
   var toggle = document.querySelector(".menu-toggle");
   function closeMenu() {
     document.body.classList.remove("menu-open");
-    if (toggle) toggle.setAttribute("aria-expanded", "false");
+    if (toggle) { toggle.setAttribute("aria-expanded", "false"); toggle.setAttribute("aria-label", "Open menu"); }
     if (lenis) lenis.start();
   }
   if (toggle) {
     toggle.addEventListener("click", function () {
       var open = document.body.classList.toggle("menu-open");
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       if (lenis) { open ? lenis.stop() : lenis.start(); }
     });
   }
