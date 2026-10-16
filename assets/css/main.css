@@ -414,23 +414,9 @@ body.menu-open .menu-toggle span::after { transform: rotate(-45deg) translateY(-
 .form__note { font-size: .82rem; color: var(--ink-soft); }
 .form-success { background: #ecf7ee; border: 1px solid #bfe3c6; color: #1f6b33; padding: 1rem 1.2rem; border-radius: var(--radius-sm); }
 
-/* ---------- floating WhatsApp ---------- */
-.wa-float {
-  position: fixed; right: clamp(1rem, 3vw, 2rem); bottom: clamp(1rem, 3vw, 2rem);
-  z-index: 95;
-  width: 58px; height: 58px; border-radius: 50%;
-  background: #25d366; color: #fff;
-  display: grid; place-items: center;
-  box-shadow: 0 12px 30px rgba(37, 211, 102, .45);
-  transition: transform .3s var(--ease);
-}
-.wa-float:hover { transform: scale(1.08) rotate(4deg); }
-.wa-float svg { width: 30px; height: 30px; }
-@media print { .wa-float { display: none; } }
-
 /* ---------- back to top ---------- */
 .to-top {
-  position: fixed; right: clamp(1rem, 3vw, 2rem); bottom: calc(clamp(1rem, 3vw, 2rem) + 72px);
+  position: fixed; right: clamp(1rem, 3vw, 2rem); bottom: clamp(1rem, 3vw, 2rem);
   z-index: 95; width: 46px; height: 46px; border-radius: 50%;
   background: var(--navy); color: #fff; display: grid; place-items: center;
   opacity: 0; pointer-events: none; transform: translateY(10px);

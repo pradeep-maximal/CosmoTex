@@ -322,7 +322,7 @@
         }
       }).catch(function () {
         if (btn) { btn.disabled = false; btn.textContent = original; }
-        alert("Something went wrong sending your message. Please email subra.cosmotextile@gmail.com or message us on WhatsApp.");
+        alert("Something went wrong sending your message. Please try again in a moment.");
       });
     });
   }
