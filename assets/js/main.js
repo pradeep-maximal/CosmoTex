@@ -315,7 +315,7 @@
           var ok = document.createElement("div");
           ok.className = "form-success";
           ok.setAttribute("role", "status");
-          ok.textContent = "Thank you — your enquiry has reached our export team. We usually reply within one business day.";
+          ok.textContent = "Thank you. Your enquiry has reached our export team. We usually reply within one business day.";
           form.replaceWith(ok);
         } else {
           throw new Error("bad response");
