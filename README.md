@@ -113,7 +113,7 @@ biggest visual upgrade available.
 
 ## Point it at your real domain
 
-Replace `https://www.cosmotextile.example` with your real domain in:
+Replace `https://cosmotextile.in` with your real domain in:
 
 - every `*.html` — `<link rel="canonical">` and the `og:` / `twitter:` meta tags
 - `sitemap.xml`
